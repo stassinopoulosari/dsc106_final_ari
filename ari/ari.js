@@ -137,6 +137,12 @@
             .attr('font-size', 12)
             .attr('transform', 'translate(' + svgDim.w / 2 + ',' + (svgDim.h - svgDim.p + 15) + ')');
 
+            $svg.append('text')
+              .text('Distance from Downtown San Diego vs Total Visits, by week')
+              .attr('text-anchor', 'middle')
+              .attr('font-size', 20)
+              .attr('transform', 'translate(' + svgDim.w / 2 + ', 25)');
+
           const $dotsGroup = $svg
             .append('g')
             .attr('id', 'plot1Dots')
@@ -221,7 +227,7 @@
         $dotsGroup
           .selectAll('circle')
           .transition('circleAnimate')
-          .duration(150)
+          .duration(200)
           .attr('fill', isAfterCovid ? 'hsl(0, 100%, ' + (50 - 50 * ((rowDate - covidDate) / (endDate - covidDate + 1))) + '%)' : 'black')
           .attr('cx', (d, i) => xScale(
             d[1]
@@ -231,31 +237,31 @@
           ))
         $svg.select('#plot1CumulativeLine')
           .transition('lineAnimate')
-          .duration(180)
+          .duration(200)
           .attr('y1', yScale(cumulativeAverage))
           .attr('y2', yScale(cumulativeAverage))
         $svg.select('#plot1CumulativeLabel')
           .transition('textAnimate')
-          .duration(180)
+          .duration(200)
           .attr('y', yScale(cumulativeAverage) + 10)
         $svg.select('#plot1PCCumulativeLine')
           .transition('lineAnimate')
-          .duration(180)
+          .duration(200)
           .attr('y1', yScale(cumulativePostCovidAverage))
           .attr('y2', yScale(cumulativePostCovidAverage))
           .attr('opacity', isAfterCovid ? 1 : 0)
         $svg.select('#plot1PCCumulativeLabel')
           .transition('textAnimate')
-          .duration(180)
+          .duration(200)
           .attr('y', yScale(cumulativePostCovidAverage) + 10)
           .attr('opacity', isAfterCovid ? 1 : 0)
           $svg.select('#plot1PreCCumulativeLine')
             .transition('lineAnimate')
-            .duration(180)
+            .duration(200)
             .attr('opacity', isAfterCovid ? 1 : 0)
           $svg.select('#plot1PreCCumulativeLabel')
             .transition('textAnimate')
-            .duration(180)
+            .duration(200)
             .attr('opacity', isAfterCovid ? 1 : 0)
 
       };
