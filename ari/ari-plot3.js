@@ -106,7 +106,7 @@
       .attr('stroke', 'black')
       .attr('opacity', 0);
     $svg.append('text')
-      .text('Week #')
+      .text('Week')
       .attr('text-anchor', 'middle')
       .attr('font-size', 12)
       .attr('transform', 'translate(' + svgDim.w / 2 + ',' + (svgDim.h - svgDim.p + 30) + ')');
@@ -139,6 +139,33 @@
       .attr('height', (d, i) => yScale(d[0]) - yScale(d[1]))
       .attr('y', (d, i) => yScale(d[1]))
       .attr('stroke', (d, i) => i == 25);
+    const $legend = $svg
+      .append('g')
+      .attr('id', 'plot3Legend'),
+      legendData = [
+        ['McDonald\'s', 'McDonalds'],
+        ['Wendy\'s', 'Wendys'],
+        ['Burger King', 'Burger King']
+      ]
+    $legend.selectAll('rect')
+      .data(legendData)
+      .enter()
+      .append('rect')
+      .attr('width', 10)
+      .attr('height', 10)
+      .attr('x', 0)
+      .attr('y', (d, i) => 15 * i)
+      .attr('data-location', (d) => d[1]);
+    $legend.selectAll('text')
+      .data(legendData)
+      .enter()
+      .append('text')
+      .attr('x', 15)
+      .attr('y', (d, i) => 10 + 15 * i)
+      .attr('font-size', 12)
+      .text((d) => d[0]);
+    const legendBBox = $legend.node().getBBox();
+    $legend.attr('transform', 'translate(' + (svgDim.w - svgDim.p - legendBBox.width - 10) + ', ' + (svgDim.p + 10) + ')')
     window.updatePlot3 = (weekNumber) => {
       console.log(weekNumber);
       if (weekNumber == 0) {

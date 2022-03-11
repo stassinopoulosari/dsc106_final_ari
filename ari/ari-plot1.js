@@ -119,10 +119,18 @@
             .attr('transform', 'translate(' + svgDim.w / 2 + ',' + (svgDim.h - svgDim.p + 15) + ')');
 
           $svg.append('text')
-            .text('Distance from Downtown San Diego vs Total Visits, by week')
+            .text('Distance from Downtown San Diego vs Total Visits')
             .attr('text-anchor', 'middle')
             .attr('font-size', 20)
             .attr('transform', 'translate(' + svgDim.w / 2 + ', 25)');
+
+          const firstWeek = dataByWeek[0][2][0][1]
+          $svg.append('text')
+            .text('week of ' + [firstWeek[0].row_date, firstWeek.slice(-1)[0].row_date].map((d) => d.toISOString().split("T")[0]).join(' to '))
+            .attr('id', 'weekOfText')
+            .attr('text-anchor', 'middle')
+            .attr('font-size', 20)
+            .attr('transform', 'translate(' + svgDim.w / 2 + ', 45)');
 
           $svg.append('rect')
             .attr('id', 'plot1CovidSpectre')
@@ -205,6 +213,34 @@
             .attr('x', svgDim.w - svgDim.p)
             .attr('opacity', 0)
             .attr('y', yScale(cumulativeAverages[23]) + 10)
+
+          const $legend = $svg
+            .append('g')
+            .attr('id', 'plot1Legend'),
+            legendData = [
+              ['McDonald\'s', 'McDonalds'],
+              ['Wendy\'s', 'Wendys'],
+              ['Burger King', 'Burger King']
+            ]
+          $legend.selectAll('rect')
+            .data(legendData)
+            .enter()
+            .append('rect')
+            .attr('width', 10)
+            .attr('height', 10)
+            .attr('x', 0)
+            .attr('y', (d, i) => 15 * i)
+            .attr('data-location', (d) => d[1]);
+          $legend.selectAll('text')
+            .data(legendData)
+            .enter()
+            .append('text')
+            .attr('x', 15)
+            .attr('y', (d, i) => 10 + 15 * i)
+            .attr('font-size', 12)
+            .text((d) => d[0]);
+          const legendBBox = $legend.node().getBBox();
+          $legend.attr('transform', 'translate(' + (svgDim.w - svgDim.p - legendBBox.width - 10) + ', ' + (svgDim.p + 10) + ')')
           return;
         }
         const $dotsGroup = $svg
@@ -256,6 +292,9 @@
           .transition('spectreAnimate')
           .duration(200)
           .attr('opacity', isAfterCovid ? 0.25 : 0);
+        const currentWeek = dataByWeek[0][2][weekNumber][1];
+        $svg.select('#weekOfText')
+          .text('week of ' + [currentWeek[0].row_date, currentWeek.slice(-1)[0].row_date].map((d) => d.toISOString().split("T")[0]).join(' to '))
       };
     (function() {
       const $playButton = d3.select('#plot1PlayPause'),
