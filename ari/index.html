@@ -42,9 +42,14 @@
 <body>
   <div id="plot1Container">
     <h1>Plot 1: Explore the trend of total traffic to each location every week related to the distance from downtown San Diego? (Scatterplot with animated timeline)</h1>
+    <button type="button" disabled class="plot1Reset">|&lt;&lt;</button>
+    <button type="button" disabled id="plot1Back">|&lt;</button>
     <button type="button" id="plot1PlayPause">Play</button>
+    <button type="button" id="plot1Fwd">&gt;|</button>
+    <button type="button" id="plot1End">&gt&gt;|</button>
+
     <input type="range" min="0" max="56" value="0" id="plot1WeekRange" list="covidWeek">
-    <button type="button" id="plot1Reset">Reset</button>
+    <button type="button" disabled class="plot1Reset">Reset</button>
     <datalist id="covidWeek">
       <option value="24"></option>
     </datalist>

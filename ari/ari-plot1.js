@@ -259,43 +259,121 @@
       };
     (function() {
       const $playButton = d3.select('#plot1PlayPause'),
-        $resetButton = d3.select('#plot1Reset'),
+        $resetButton = d3.selectAll('.plot1Reset'),
+        $backButton = d3.select('#plot1Back'),
+        $endButton = d3.select('#plot1End'),
+        $fwdButton = d3.select('#plot1Fwd'),
         $weekRange = d3.select('#plot1WeekRange');
       var isPlaying = false,
         intervalID = null;
       const playPause = function() {
-        isPlaying = !isPlaying;
-        if (intervalID != null) {
-          clearInterval(intervalID);
-          intervalID = null;
+          isPlaying = !isPlaying;
+          if (intervalID != null) {
+            clearInterval(intervalID);
+            intervalID = null;
+          }
+          if (isPlaying) {
+            $playButton.text('Pause');
+            $weekRange.attr('disabled', true);
+            intervalID = setInterval(() => {
+              $backButton.attr('disabled', null);
+              $resetButton.attr('disabled', null);
+              const weekNumber = parseInt($weekRange.property('value')) + 1;
+              if (weekNumber > 55) {
+                playPause();
+                $playButton.attr('disabled', true);
+                $fwdButton.attr('disabled', true);
+                $endButton.attr('disabled', true);
+              }
+              $weekRange.property('value', weekNumber);
+              updateRepresentation(weekNumber);
+            }, 200);
+          } else {
+            $playButton.text('Play');
+            $weekRange.attr('disabled', null);
+          }
+        },
+        reset = function() {
+          if (isPlaying) {
+            playPause();
+          }
+          $weekRange.property('value', 0);
+          updateRepresentation(0);
+          $backButton.attr('disabled', true);
+          $resetButton.attr('disabled', true);
+          $playButton.attr('disabled', null);
+          $fwdButton.attr('disabled', null);
+          $endButton.attr('disabled', null);
+        },
+        fwd = () => {
+          if (isPlaying) {
+            playPause();
+          }
+          const weekNumber = parseInt($weekRange.property('value'));
+          if (weekNumber + 1 > 55) {
+            $playButton.attr('disabled', true);
+            $fwdButton.attr('disabled', true);
+            $endButton.attr('disabled', true);
+          } else {
+            $playButton.attr('disabled', null);
+            $endButton.attr('disabled', null);
+          }
+          $backButton.attr('disabled', null);
+          $resetButton.attr('disabled', null);
+          $weekRange.property('value', weekNumber + 1);
+          updateRepresentation(weekNumber + 1);
+        },
+        back = () => {
+          if (isPlaying) {
+            playPause();
+          }
+          const weekNumber = parseInt($weekRange.property('value'));
+          $playButton.attr('disabled', null);
+          $endButton.attr('disabled', null);
+          $fwdButton.attr('disabled', null);
+          if (weekNumber - 1 == 0) {
+            $backButton.attr('disabled', true);
+            $resetButton.attr('disabled', true);
+          }
+          $weekRange.property('value', weekNumber - 1);
+          updateRepresentation(weekNumber - 1);
+        },
+        end = () => {
+          if (isPlaying) {
+            playPause();
+          }
+          const weekNumber = 56;
+          $playButton.attr('disabled', true);
+          $fwdButton.attr('disabled', true);
+          $endButton.attr('disabled', true);
+          $backButton.attr('disabled', null);
+          $resetButton.attr('disabled', null);
+          $weekRange.property('value', weekNumber);
+          updateRepresentation(weekNumber);
         }
-        if (isPlaying) {
-          $playButton.text('Pause');
-          $weekRange.attr('disabled', true);
-          intervalID = setInterval(() => {
-            const weekNumber = parseInt($weekRange.property('value')) + 1;
-            if (weekNumber > 55) {
-              playPause();
-            }
-            $weekRange.property('value', weekNumber);
-            updateRepresentation(weekNumber);
-          }, 200);
-        } else {
-          $playButton.text('Play');
-          $weekRange.attr('disabled', null);
-        }
-      };
-      const reset = function() {
-        if (isPlaying) {
-          playPause();
-        }
-        $weekRange.property('value', 0);
-        updateRepresentation(0);
-      };
       $playButton.on('click', playPause);
       $resetButton.on('click', reset);
+      $fwdButton.on('click', fwd);
+      $backButton.on('click', back);
+      $endButton.on('click', end);
       $weekRange.on('change', () => {
         const weekNumber = parseInt($weekRange.property('value'));
+        if (weekNumber > 55) {
+          $playButton.attr('disabled', true);
+          $fwdButton.attr('disabled', true);
+          $endButton.attr('disabled', true);
+        } else {
+          $playButton.attr('disabled', null);
+          $fwdButton.attr('disabled', null);
+          $endButton.attr('disabled', null);
+        }
+        if (weekNumber == 0) {
+          $backButton.attr('disabled', true);
+          $resetButton.attr('disabled', true);
+        } else {
+          $backButton.attr('disabled', null);
+          $resetButton.attr('disabled', null);
+        }
         updateRepresentation(weekNumber);
       });
     })();
