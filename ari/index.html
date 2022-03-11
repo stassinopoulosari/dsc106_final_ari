@@ -17,7 +17,17 @@
     circle[data-location="Burger King"] {
       fill: #000e8a;
     }
-    #plot1Container {
+
+    #plot3Group-mcdonalds {
+      fill: #ba0900;
+    }
+    #plot3Group-wendys {
+      fill: #acad7b;
+    }
+    #plot3Group-burgerking {
+      fill: #000e8a;
+    }
+    #plot1Container, #plot3Container {
       margin: auto;
       text-align: center;
     }
@@ -41,9 +51,18 @@
     <br>
     <svg id="plot1SVG"></svg>
   </div>
-  <h1>Plot 3: How did the average daily traffic each week for each brand change during the course of the early COVID-19 pandemic? (Stacked bar chart)</h1>
+  <div id="plot3Container">
+    <h1>Plot 3: How did the average daily traffic each week for each brand change during the course of the early COVID-19 pandemic? (Stacked bar chart)</h1>
+    <br>
+    <svg id="plot3SVG"></svg>
+  </div>
 </body>
 <script src="../d3.js"></script>
-<script src="ari.js"></script>
+<script src="ari-preprocessing.js"></script>
+<script>
+  window.updatePlot3 = () => {};
+</script>
+<script src="ari-plot1.js"></script>
+<script src="ari-plot3.js"></script>
 
 </html>
