@@ -123,22 +123,6 @@
       .attr('height', svgDim.h - 2 * svgDim.p)
       .attr('fill', 'red')
       .attr('opacity', 0.25)
-    const groups = $svg.selectAll('.plot3Group')
-      .data(stack)
-      .enter()
-      .append('g')
-      .attr('class', 'plot3Group')
-      .attr('id', (d, i) => 'plot3Group-' + ['mcdonalds', 'wendys', 'burgerking'][i]);
-    groups
-      .selectAll('rect')
-      .data((d) => [d, console.log(d)][0])
-      .enter()
-      .append('rect')
-      .attr('x', (d, i) => xScale(i + 1) + xScale.bandwidth() * 0.1)
-      .attr('width', (d, i) => xScale.bandwidth() * 0.8)
-      .attr('height', (d, i) => yScale(d[0]) - yScale(d[1]))
-      .attr('y', (d, i) => yScale(d[1]))
-      .attr('stroke', (d, i) => i == 25);
     const $legend = $svg
       .append('g')
       .attr('id', 'plot3Legend'),
@@ -164,6 +148,22 @@
       .attr('y', (d, i) => 10 + 15 * i)
       .attr('font-size', 12)
       .text((d) => d[0]);
+    const groups = $svg.selectAll('.plot3Group')
+      .data(stack)
+      .enter()
+      .append('g')
+      .attr('class', 'plot3Group')
+      .attr('id', (d, i) => 'plot3Group-' + ['mcdonalds', 'wendys', 'burgerking'][i]);
+    groups
+      .selectAll('rect')
+      .data((d) => [d, console.log(d)][0])
+      .enter()
+      .append('rect')
+      .attr('x', (d, i) => xScale(i + 1) + xScale.bandwidth() * 0.1)
+      .attr('width', (d, i) => xScale.bandwidth() * 0.8)
+      .attr('height', (d, i) => yScale(d[0]) - yScale(d[1]))
+      .attr('y', (d, i) => yScale(d[1]))
+      .attr('stroke', (d, i) => i == 25);
     const legendBBox = $legend.node().getBBox();
     $legend.attr('transform', 'translate(' + (svgDim.w - svgDim.p - legendBBox.width - 10) + ', ' + (svgDim.p + 10) + ')')
     window.updatePlot3 = (weekNumber) => {
