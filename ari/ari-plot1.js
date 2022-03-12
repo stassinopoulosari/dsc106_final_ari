@@ -44,7 +44,7 @@
   }
   loadData(addDatePreprocessor).then((data) => {
     const downtownCoordinates = [32.716845, -117.162947],
-      covidWeekNumber = 24,
+      covidWeekNumber = 23,
       dataByWeek = d3.flatGroup(data, (d) => d.location_name + " : " + d.street_address).map((location) => {
         const locationCoordinates = [location[1][0].latitude, location[1][0].longitude],
           distanceFromSanDiego = Math.pow(
@@ -109,12 +109,14 @@
           $svg.append('text')
             .text('Visits')
             .attr('text-anchor', 'middle')
+            .attr('font-weight', 'bold')
             .attr('font-size', 12)
             .attr('transform', 'translate(13, ' + svgDim.h / 2 + ') rotate(-90)');
 
           $svg.append('text')
             .text('Distance from Downtown San Diego')
             .attr('text-anchor', 'middle')
+            .attr('font-weight', 'bold')
             .attr('font-size', 12)
             .attr('transform', 'translate(' + svgDim.w / 2 + ',' + (svgDim.h - svgDim.p + 15) + ')');
 
@@ -148,14 +150,37 @@
             .data(dataByWeek)
             .enter()
             .append('circle')
-            .attr('r', 4)
-            .attr('data-location', (d) => d[0].split(' : ')[0].replace("'", ''))
+            .attr('r', 6)
+            .attr('class', (d) => "color-" + d[0].split(' : ')[0].replace("'", '').replace(" ", "").toLowerCase())
             .attr('cx', (d, i) => xScale(
               d[1]
             ))
             .attr('cy', (d, i) => yScale(
               d[2][weekNumber][0]
             ))
+            .attr('opacity', 1)
+            .attr('cursor', 'pointer')
+            .attr('data-location', (d) => d[0])
+            .on('mouseenter', function() {
+              const circle = d3.select(this);
+              const location = circle.attr('data-location');
+              d3.select('.plot1TooltipContainer[data-location="' + location + '"]')
+                .attr('display', 'inline')
+                .transition('show')
+                .duration(100)
+                .attr('opacity', 1);
+            })
+            .on('mouseout', function() {
+              const circle = d3.select(this);
+              const location = circle.attr('data-location');
+              d3.select('.plot1TooltipContainer[data-location="' + location + '"]')
+                .transition('hide')
+                .duration(100)
+                .attr('opacity', 0)
+                .on('end', function() {
+                  d3.select(this).attr('display', 'none')
+                });
+            });
           $svg
             .append('line')
             .attr('id', 'plot1CumulativeLine')
@@ -170,6 +195,7 @@
             .attr('id', 'plot1CumulativeLabel')
             .text('Total Cumulative Average')
             .attr('text-anchor', 'end')
+            .attr('pointer-events', 'none')
             .attr('font-size', 12)
             .attr('x', svgDim.w - svgDim.p)
             .attr('y', yScale(cumulativeAverage) + 10)
@@ -188,6 +214,7 @@
             .attr('id', 'plot1PCCumulativeLabel')
             .text('COVID Cumulative Average')
             .attr('text-anchor', 'end')
+            .attr('pointer-events', 'none')
             .attr('font-size', 12)
             .attr('fill', 'grey')
             .attr('x', svgDim.w - svgDim.p)
@@ -208,6 +235,7 @@
             .attr('id', 'plot1PreCCumulativeLabel')
             .text('Pre-COVID Cumulative Average')
             .attr('text-anchor', 'end')
+            .attr('pointer-events', 'none')
             .attr('font-size', 12)
             .attr('fill', 'grey')
             .attr('x', svgDim.w - svgDim.p)
@@ -218,9 +246,9 @@
             .append('g')
             .attr('id', 'plot1Legend'),
             legendData = [
-              ['McDonald\'s', 'McDonalds'],
-              ['Wendy\'s', 'Wendys'],
-              ['Burger King', 'Burger King']
+              ['McDonald\'s', 'mcdonalds'],
+              ['Wendy\'s', 'wendys'],
+              ['Burger King', 'burgerking']
             ]
           $legend.selectAll('rect')
             .data(legendData)
@@ -230,7 +258,7 @@
             .attr('height', 10)
             .attr('x', 0)
             .attr('y', (d, i) => 15 * i)
-            .attr('data-location', (d) => d[1]);
+            .attr('class', (d) => "color-" + d[1]);
           $legend.selectAll('text')
             .data(legendData)
             .enter()
@@ -239,6 +267,55 @@
             .attr('y', (d, i) => 10 + 15 * i)
             .attr('font-size', 12)
             .text((d) => d[0]);
+
+          const tooltipContainers = $svg.selectAll('g.plot1TooltipContainer')
+            .data(dataByWeek)
+            .enter()
+            .append('g')
+            .attr('class', 'plot1TooltipContainer')
+            .attr('data-location', (d) => d[0])
+            .attr('opacity', 0)
+          tooltipContainers.append('rect')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('fill', 'white')
+            .attr('stroke', 'grey')
+            .attr('stroke-width', 1);
+          tooltipContainers.append('text')
+            .text((d) => d[0])
+            .attr('x', 5)
+            .attr('y', 16)
+            .attr('font-size', 15)
+            .attr('font-weight', 'bold');
+          tooltipContainers.append('text')
+            .attr('class', 'plot1tooltip-secondary')
+            .attr('x', 5)
+            .attr('y', 27)
+            .attr('font-size', 12)
+            .text((d) => d[2][weekNumber][0]);
+
+          d3.selectAll('.plot1TooltipContainer')
+            .each(function(d) {
+              const tooltip = d3.select(this);
+              const bbox = this.getBBox();
+              console.log(bbox);
+              tooltip.select('rect').attr('width', bbox.width + 10)
+                .attr('height', bbox.height + 5)
+              if(xScale(d[1]) + bbox.width + 10 > svgDim.w) {
+                tooltip.attr('transform', (d) => 'translate(' + (xScale(
+                  d[1]
+                ) - bbox.width - 16) + ', ' + (yScale(
+                  d[2][weekNumber][0]
+                ) + 6) + ')')
+              } else {
+                tooltip.attr('transform', (d) => 'translate(' + (xScale(
+                  d[1]
+                ) + 6) + ', ' + (yScale(
+                  d[2][weekNumber][0]
+                ) + 6) + ')')
+              }
+
+            }).attr('display', 'none')
           const legendBBox = $legend.node().getBBox();
           $legend.attr('transform', 'translate(' + (svgDim.w - svgDim.p - legendBBox.width - 10) + ', ' + (svgDim.p + 10) + ')')
           return;
@@ -246,9 +323,34 @@
         const $dotsGroup = $svg
           .select('#plot1Dots'),
           rowDate = weekNumber,
-          covidDate = 24,
+          covidDate = 23,
           endDate = 57,
           isAfterCovid = weekNumber > covidWeekNumber
+
+        d3.selectAll('.plot1TooltipContainer')
+          .each(function(d) {
+            const bbox = d3.select(this).attr('display', 'block').node().getBBox(),
+            tooltip = d3.select(this);
+            d3.select(this).attr('display', 'none');
+            console.log(bbox);
+            if(xScale(d[1]) + bbox.width + 10 > svgDim.w) {
+              tooltip.attr('transform', (d) => 'translate(' + (xScale(
+                d[1]
+              ) - bbox.width - 16) + ', ' + (yScale(
+                d[2][weekNumber][0]
+              ) + 6) + ')')
+            } else {
+              tooltip.attr('transform', (d) => 'translate(' + (xScale(
+                d[1]
+              ) + 6) + ', ' + (yScale(
+                d[2][weekNumber][0]
+              ) + 6) + ')')
+            }
+            d3.select(this).select('.plot1tooltip-secondary')
+            .text((d) => d[2][weekNumber][0]);
+          });
+
+
         $dotsGroup
           .selectAll('circle')
           .transition('circleAnimate')
@@ -395,7 +497,7 @@
       $fwdButton.on('click', fwd);
       $backButton.on('click', back);
       $endButton.on('click', end);
-      $weekRange.on('change', () => {
+      $weekRange.on('input', () => {
         const weekNumber = parseInt($weekRange.property('value'));
         if (weekNumber > 55) {
           $playButton.attr('disabled', true);

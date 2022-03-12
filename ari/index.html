@@ -5,59 +5,32 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <style>
-    *[data-location="McDonalds"] {
-      fill: #ba0900;
-    }
-
-    *[data-location="Wendys"] {
-      fill: #acad7b;
-    }
-
-    *[data-location="Burger King"] {
-      fill: #000e8a;
-    }
-
-    #plot3Group-mcdonalds {
-      fill: #ba0900;
-    }
-    #plot3Group-wendys {
-      fill: #acad7b;
-    }
-    #plot3Group-burgerking {
-      fill: #000e8a;
-    }
-    #plot1Container, #plot3Container {
-      margin: auto;
-      text-align: center;
-    }
-
-    svg text {
-      font-family: sans-serif;
-    }
-  </style>
+  <link href="ari-style.css" rel="stylesheet"/>
   <title>Final Project DV: Ari</title>
 </head>
 
 <body>
-  <div id="plot1Container">
-    <h1>Plot 1: Explore the trend of total traffic to each location every week related to the distance from downtown San Diego? (Scatterplot with animated timeline)</h1>
-    <button type="button" disabled class="plot1Reset">|&lt;&lt;</button>
-    <button type="button" disabled id="plot1Back">|&lt;</button>
-    <button type="button" id="plot1PlayPause">Play</button>
-    <button type="button" id="plot1Fwd">&gt;|</button>
-    <button type="button" id="plot1End">&gt&gt;|</button>
+  <div id="plot1Container" class="container">
+    <h1>Plot 1: Explore the trend of total traffic to each location every week related to the distance from downtown San Diego (Scatterplot with animated timeline)</h1>
+    <div id="plot1Controls">
+      <button type="button" disabled class="plot1Reset">|&lt;&lt;</button>
+      <button type="button" disabled id="plot1Back">|&lt;</button>
+      <button type="button" id="plot1PlayPause">Play</button>
+      <button type="button" id="plot1Fwd">&gt;|</button>
+      <button type="button" id="plot1End">&gt&gt;|</button>
+      <input type="range" min="0" max="56" value="0" id="plot1WeekRange" list="covidWeek">
+      <button type="button" disabled class="plot1Reset">Reset</button>
+    </div>
 
-    <input type="range" min="0" max="56" value="0" id="plot1WeekRange" list="covidWeek">
-    <button type="button" disabled class="plot1Reset">Reset</button>
+
     <datalist id="covidWeek">
       <option value="24"></option>
     </datalist>
     <br>
     <svg id="plot1SVG"></svg>
   </div>
-  <div id="plot3Container">
-    <h1>Plot 3: How did the average daily traffic each week for each brand change during the course of the early COVID-19 pandemic? (Stacked bar chart)</h1>
+  <div id="plot3Container" class="container">
+    <h1>Plot 3: How did the average daily traffic each week for each brand change during the course of the early COVID-19 pandemic (Stacked bar chart)?</h1>
     <br>
     <svg id="plot3SVG"></svg>
   </div>

@@ -95,6 +95,7 @@
     $svg.append('text')
       .text('Average Total Weekly Visits')
       .attr('text-anchor', 'middle')
+      .attr('font-weight', 'bold')
       .attr('font-size', 12)
       .attr('transform', 'translate(13, ' + svgDim.h / 2 + ') rotate(-90)');
     const $playLine = $svg.append('line')
@@ -107,6 +108,7 @@
       .attr('opacity', 0);
     $svg.append('text')
       .text('Week')
+      .attr('font-weight', 'bold')
       .attr('text-anchor', 'middle')
       .attr('font-size', 12)
       .attr('transform', 'translate(' + svgDim.w / 2 + ',' + (svgDim.h - svgDim.p + 30) + ')');
@@ -127,9 +129,9 @@
       .append('g')
       .attr('id', 'plot3Legend'),
       legendData = [
-        ['McDonald\'s', 'McDonalds'],
-        ['Wendy\'s', 'Wendys'],
-        ['Burger King', 'Burger King']
+        ['McDonald\'s', 'mcdonalds'],
+        ['Wendy\'s', 'wendys'],
+        ['Burger King', 'burgerking']
       ]
     $legend.selectAll('rect')
       .data(legendData)
@@ -139,7 +141,7 @@
       .attr('height', 10)
       .attr('x', 0)
       .attr('y', (d, i) => 15 * i)
-      .attr('data-location', (d) => d[1]);
+      .attr('class', (d) => "color-" + d[1]);
     $legend.selectAll('text')
       .data(legendData)
       .enter()
@@ -152,8 +154,7 @@
       .data(stack)
       .enter()
       .append('g')
-      .attr('class', 'plot3Group')
-      .attr('id', (d, i) => 'plot3Group-' + ['mcdonalds', 'wendys', 'burgerking'][i]);
+      .attr('class', (d, i) => 'plot3Group color-' + ['mcdonalds', 'wendys', 'burgerking'][i]);
     groups
       .selectAll('rect')
       .data((d) => [d, console.log(d)][0])
@@ -166,6 +167,92 @@
       .attr('stroke', (d, i) => i == 25);
     const legendBBox = $legend.node().getBBox();
     $legend.attr('transform', 'translate(' + (svgDim.w - svgDim.p - legendBBox.width - 10) + ', ' + (svgDim.p + 10) + ')')
+    const tooltipGroups =
+      $svg
+      .selectAll('g.plot3TooltipContainer')
+      .data(plotData)
+      .enter()
+      .append('g')
+      .attr('class', 'plot3TooltipContainer')
+      .attr('pointer-events', 'none')
+      .attr('opacity', 0);
+    tooltipGroups.append('rect').attr('x', 0).attr('y', 0).attr('fill', 'white')
+    .attr('stroke-width', 1)
+    .attr('stroke', 'grey');
+    tooltipGroups.append('text')
+      .attr('x', 5)
+      .attr('y', 12)
+      .attr('class', 'plot3TooltipBurgerking')
+      .attr('font-size', 12)
+      .text('Burger King')
+      .attr('font-weight', 'bold')
+    tooltipGroups.append('text')
+      .attr('x', 5)
+      .attr('y', 24)
+      .attr('class', 'plot3TooltipWendys')
+      .attr('font-size', 12)
+      .text('Wendy\'s')
+      .attr('font-weight', 'bold')
+    tooltipGroups.append('text')
+      .attr('x', 5)
+      .attr('y', 36)
+      .attr('class', 'plot3TooltipMcdonalds')
+      .attr('font-size', 12)
+      .text('McDonald\'s')
+      .attr('font-weight', 'bold');
+    tooltipGroups.each(function(d, i) {
+      const tooltip = d3.select(this),
+        headings = [
+          tooltip.select('.plot3TooltipBurgerking'),
+          tooltip.select('.plot3TooltipWendys'),
+          tooltip.select('.plot3TooltipMcdonalds')
+        ],
+        maxHeadingWidth = d3.max(headings, (d) => d.node().getBBox().width);
+      tooltip.append('text')
+        .attr('x', maxHeadingWidth + 10)
+        .attr('y', 12)
+        .attr('font-size', 12)
+        .text((d) => Math.trunc(d.wendys))
+      tooltip.append('text')
+        .attr('x', maxHeadingWidth + 10)
+        .attr('y', 24)
+        .attr('font-size', 12)
+        .text((d) => Math.trunc(d.burgerking))
+      tooltip.append('text')
+        .attr('x', maxHeadingWidth + 10)
+        .attr('y', 36)
+        .attr('font-size', 12)
+        .text((d) => Math.trunc(d.mcdonalds))
+      const tooltipBBoxA = tooltip.node().getBBox();
+      tooltip.select('rect').attr('width', tooltipBBoxA.width + 10)
+      tooltip.select('rect').attr('height', tooltipBBoxA.height + 5)
+      const tooltipBBoxB = tooltip.node().getBBox();
+      if(!xScale(i + 2) || xScale(i + 2) + tooltipBBoxB.width > svgDim.w) {
+        tooltip.attr('transform', 'translate(' + ((xScale(i + 1)) - tooltipBBoxB.width) + ', ' + yScale(d.total) + ')');
+      } else {
+        tooltip.attr('transform', 'translate(' + xScale(i + 2) + ', ' + yScale(d.total) + ')');
+      }
+      $svg
+      .append('rect')
+      .attr('class', 'targetRect')
+      .attr('opacity', 0)
+      .attr('x', xScale(i + 1))
+      .attr('width', xScale.bandwidth())
+      .attr('y', yScale(d.total))
+      .attr('height', svgDim.h - svgDim.p - yScale(d.total))
+      .attr('cursor', 'pointer')
+      .on('mouseover', () => {
+        tooltip.transition('showTooltip')
+        .duration(100)
+        .attr('opacity', 1)
+      })
+      .on('mouseout', () => {
+        tooltip.transition('showTooltip')
+        .duration(100)
+        .attr('opacity', 0)
+      });
+    })
+    tooltipGroups.select()
     window.updatePlot3 = (weekNumber) => {
       console.log(weekNumber);
       if (weekNumber == 0) {

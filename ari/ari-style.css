@@ -1,0 +1,38 @@
+.color-mcdonalds {
+  fill: #ba0900;
+}
+.color-wendys {
+  fill: #acad7b;
+}
+.color-burgerking {
+  fill: #000e8a;
+}
+.container{
+  margin: auto;
+  text-align: center;
+  padding:2em;
+}
+#plot1Controls {
+  display:flex;
+}
+#plot1Controls button {
+  display:block;
+  flex:1;
+}
+#plot1Controls input {
+  flex: 3;
+}
+
+svg text {
+  font-family: sans-serif;
+}
+
+button {
+  font-size: 1.25em;
+  background-color: #FFFFFF;
+  border: 1px solid grey;
+  cursor:pointer;
+}
+button:disabled {
+  cursor:not-allowed;
+}
