@@ -90,7 +90,7 @@
     $svg.append('g').call(
       d3.axisBottom(xScale)
       .tickValues([24])
-      .tickFormat((week) => week == 24 ? "Week of March 13, 2020" : "")
+      .tickFormat((week) => week == 24 ? "Week of March 15, 2020" : "")
     ).attr('transform', 'translate(0, ' + (svgDim.h - svgDim.p) + ')');
     $svg.append('text')
       .text('Average Total Weekly Visits')
@@ -157,7 +157,7 @@
       .attr('class', (d, i) => 'plot3Group color-' + ['mcdonalds', 'wendys', 'burgerking'][i]);
     groups
       .selectAll('rect')
-      .data((d) => [d, console.log(d)][0])
+      .data((d) => d)
       .enter()
       .append('rect')
       .attr('x', (d, i) => xScale(i + 1) + xScale.bandwidth() * 0.1)
@@ -177,8 +177,8 @@
       .attr('pointer-events', 'none')
       .attr('opacity', 0);
     tooltipGroups.append('rect').attr('x', 0).attr('y', 0).attr('fill', 'white')
-    .attr('stroke-width', 1)
-    .attr('stroke', 'grey');
+      .attr('stroke-width', 1)
+      .attr('stroke', 'grey');
     tooltipGroups.append('text')
       .attr('x', 5)
       .attr('y', 12)
@@ -200,12 +200,20 @@
       .attr('font-size', 12)
       .text('McDonald\'s')
       .attr('font-weight', 'bold');
+    tooltipGroups.append('text')
+      .attr('x', 5)
+      .attr('y', 48)
+      .attr('class', 'plot3TooltipWeekDates')
+      .attr('font-size', 12)
+      .text((d) => d.bounds.join('–'))
+      .attr('font-weight', 'bold');
     tooltipGroups.each(function(d, i) {
       const tooltip = d3.select(this),
         headings = [
           tooltip.select('.plot3TooltipBurgerking'),
           tooltip.select('.plot3TooltipWendys'),
           tooltip.select('.plot3TooltipMcdonalds')
+          // tooltip.select('.plot3TooltipWeekDates')
         ],
         maxHeadingWidth = d3.max(headings, (d) => d.node().getBBox().width);
       tooltip.append('text')
@@ -227,34 +235,34 @@
       tooltip.select('rect').attr('width', tooltipBBoxA.width + 10)
       tooltip.select('rect').attr('height', tooltipBBoxA.height + 5)
       const tooltipBBoxB = tooltip.node().getBBox();
-      if(!xScale(i + 2) || xScale(i + 2) + tooltipBBoxB.width > svgDim.w) {
+      if (!xScale(i + 2) || xScale(i + 2) + tooltipBBoxB.width > svgDim.w) {
         tooltip.attr('transform', 'translate(' + ((xScale(i + 1)) - tooltipBBoxB.width) + ', ' + yScale(d.total) + ')');
       } else {
         tooltip.attr('transform', 'translate(' + xScale(i + 2) + ', ' + yScale(d.total) + ')');
       }
       $svg
-      .append('rect')
-      .attr('class', 'targetRect')
-      .attr('opacity', 0)
-      .attr('x', xScale(i + 1))
-      .attr('width', xScale.bandwidth())
-      .attr('y', yScale(d.total))
-      .attr('height', svgDim.h - svgDim.p - yScale(d.total))
-      .attr('cursor', 'pointer')
-      .on('mouseover', () => {
-        tooltip.transition('showTooltip')
-        .duration(100)
-        .attr('opacity', 1)
-      })
-      .on('mouseout', () => {
-        tooltip.transition('showTooltip')
-        .duration(100)
+        .append('rect')
+        .attr('class', 'targetRect')
         .attr('opacity', 0)
-      });
+        .attr('x', xScale(i + 1))
+        .attr('width', xScale.bandwidth())
+        .attr('y', yScale(d.total))
+        .attr('height', svgDim.h - svgDim.p - yScale(d.total))
+        .attr('cursor', 'pointer')
+        .on('mouseover', () => {
+          tooltip.transition('showTooltip')
+            .duration(100)
+            .attr('opacity', 1)
+        })
+        .on('mouseout', () => {
+          tooltip.transition('showTooltip')
+            .duration(100)
+            .attr('opacity', 0)
+        });
     })
     tooltipGroups.select()
     window.updatePlot3 = (weekNumber) => {
-      console.log(weekNumber);
+      // console.log(weekNumber);
       if (weekNumber == 0) {
         $playLine
           .transition('returnPlayLine')

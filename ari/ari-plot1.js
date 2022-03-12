@@ -194,6 +194,7 @@
             .append('text')
             .attr('id', 'plot1CumulativeLabel')
             .text('Total Cumulative Average')
+            .attr('font-weight', 'bold')
             .attr('text-anchor', 'end')
             .attr('pointer-events', 'none')
             .attr('font-size', 12)
@@ -207,7 +208,7 @@
             .attr('y1', yScale(cumulativePostCovidAverage))
             .attr('y2', yScale(cumulativePostCovidAverage))
             .attr('opacity', 0)
-            .attr('stroke', 'grey')
+            .attr('stroke', 'black')
             .attr('stroke-width', 1);
           $svg
             .append('text')
@@ -216,7 +217,7 @@
             .attr('text-anchor', 'end')
             .attr('pointer-events', 'none')
             .attr('font-size', 12)
-            .attr('fill', 'grey')
+            .attr('fill', 'black')
             .attr('x', svgDim.w - svgDim.p)
             .attr('opacity', 0)
             .attr('y', yScale(cumulativePostCovidAverage) + 10)
@@ -228,7 +229,7 @@
             .attr('y1', yScale(cumulativeAverages[23]))
             .attr('y2', yScale(cumulativeAverages[23]))
             .attr('opacity', 0)
-            .attr('stroke', 'grey')
+            .attr('stroke', 'black')
             .attr('stroke-width', 1);
           $svg
             .append('text')
@@ -237,7 +238,7 @@
             .attr('text-anchor', 'end')
             .attr('pointer-events', 'none')
             .attr('font-size', 12)
-            .attr('fill', 'grey')
+            .attr('fill', 'black')
             .attr('x', svgDim.w - svgDim.p)
             .attr('opacity', 0)
             .attr('y', yScale(cumulativeAverages[23]) + 10)
@@ -298,7 +299,7 @@
             .each(function(d) {
               const tooltip = d3.select(this);
               const bbox = this.getBBox();
-              console.log(bbox);
+              // console.log(bbox);
               tooltip.select('rect').attr('width', bbox.width + 10)
                 .attr('height', bbox.height + 5)
               if(xScale(d[1]) + bbox.width + 10 > svgDim.w) {
@@ -332,7 +333,7 @@
             const bbox = d3.select(this).attr('display', 'block').node().getBBox(),
             tooltip = d3.select(this);
             d3.select(this).attr('display', 'none');
-            console.log(bbox);
+            // console.log(bbox);
             if(xScale(d[1]) + bbox.width + 10 > svgDim.w) {
               tooltip.attr('transform', (d) => 'translate(' + (xScale(
                 d[1]
