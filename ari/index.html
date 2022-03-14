@@ -21,13 +21,16 @@
       <input type="range" min="0" max="56" value="0" id="plot1WeekRange" list="covidWeek">
       <button type="button" disabled class="plot1Reset">Reset</button>
     </div>
-
-
     <datalist id="covidWeek">
       <option value="24"></option>
     </datalist>
     <br>
     <svg id="plot1SVG"></svg>
+  </div>
+  <div id="plot2Container" class="container">
+    <h1>How did the average total daily traffic change every week? (Line plot)</h1>
+    <br>
+    <svg id="plot2SVG"></svg>
   </div>
   <div id="plot3Container" class="container">
     <h1>Plot 3: How did the average daily traffic each week for each brand change during the course of the early COVID-19 pandemic (Stacked bar chart)?</h1>
@@ -41,6 +44,7 @@
   window.updatePlot3 = () => {};
 </script>
 <script src="ari-plot1.js"></script>
+<script src="ari-plot2.js"></script>
 <script src="ari-plot3.js"></script>
 
 </html>

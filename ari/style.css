@@ -1,0 +1,40 @@
+.center_plot {
+  margin: auto;
+  text-align: center;
+  width: 100%;
+}
+
+#boxplot {
+  margin-left: 30%;
+}
+
+div.tooltip {
+  position: absolute;
+  text-align: left !important;
+  width: auto;
+  padding: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  background: rgb(103, 148, 220);
+  border-radius: 5px;
+  pointer-events: none;
+  opacity: 0.9;
+  border: 1px solid rgb(255, 255, 255);
+  color: #fff;
+}
+
+.tooltips {
+  background: white;
+  box-shadow: 0 0 5px #999999;
+  border-radius: 5px;
+  color: #333;
+  display: none;
+  font-size: 11px;
+  left: 130px;
+  padding: 11px;
+  position: absolute;
+
+  top: 95px;
+  width: 251px;
+  z-index: 10;
+}
