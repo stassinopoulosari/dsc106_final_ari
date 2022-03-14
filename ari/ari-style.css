@@ -36,3 +36,9 @@ button {
 button:disabled {
   cursor:not-allowed;
 }
+.covidSpectre {
+  fill: #BBB;
+}
+.covidLabel {
+  pointer-events: none;
+}

@@ -121,10 +121,16 @@
     $svg.append('rect')
       .attr('x', xScale(24) + 0.5 * xScale.bandwidth())
       .attr('y', svgDim.p)
+      .attr('class', 'covidSpectre')
       .attr('width', svgDim.w - svgDim.p - (xScale(24) + 0.5 * xScale.bandwidth()))
       .attr('height', svgDim.h - 2 * svgDim.p)
-      .attr('fill', 'red')
       .attr('opacity', 0.25)
+    $svg.append('text')
+      .attr('x', xScale(24) + 5 +  0.5 * xScale.bandwidth())
+      .attr('y', svgDim.p + 15)
+      .attr('class', 'covidLabel')
+      .attr('font-size', 12)
+      .text('COVID-19 Pandemic')
     const $legend = $svg
       .append('g')
       .attr('id', 'plot3Legend'),

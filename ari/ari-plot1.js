@@ -74,8 +74,8 @@
     for (var weekNumber = 1; weekNumber < 57; weekNumber++) {
       cumulativeAverages.push((cumulativeAverages[weekNumber - 1] * weekNumber + weeklyAverages[weekNumber]) / (weekNumber + 1))
     }
-    var cumulativePostCovidAverages = [weeklyAverages[24]]
-    for (var i = 1, weekNumber = 25; weekNumber < 57; i++ && weekNumber++) {
+    var cumulativePostCovidAverages = [weeklyAverages[covidWeekNumber]]
+    for (var i = 1, weekNumber = covidWeekNumber + 1; weekNumber < weeklyAverages.length; i++ && weekNumber++) {
       cumulativePostCovidAverages.push((cumulativePostCovidAverages[i - 1] * i + weeklyAverages[weekNumber]) / (i + 1))
     }
     window.dataByWeek = dataByWeek;
@@ -95,8 +95,8 @@
         const $svg = d3.select('#plot1SVG');
         var cumulativeAverage = cumulativeAverages[weekNumber],
           cumulativePostCovidAverage = -1;
-        if (weekNumber > 24) {
-          cumulativePostCovidAverage = cumulativePostCovidAverages[weekNumber - 24];
+        if (weekNumber > covidWeekNumber) {
+          cumulativePostCovidAverage = cumulativePostCovidAverages[weekNumber - covidWeekNumber];
         }
         if (reset) {
           $svg
@@ -136,12 +136,20 @@
 
           $svg.append('rect')
             .attr('id', 'plot1CovidSpectre')
+            .attr('class', 'covidSpectre')
             .attr('x', svgDim.p)
             .attr('y', svgDim.p)
             .attr('width', svgDim.w - 2 * svgDim.p)
             .attr('height', svgDim.h - 2 * svgDim.p)
-            .attr('fill', 'red')
             .attr('opacity', 0);
+          $svg.append('text')
+            .attr('x', svgDim.p + 5)
+            .attr('y', svgDim.p + 15)
+            .attr('id', 'plot1CovidLabel')
+            .attr('class', 'covidLabel')
+            .attr('font-size', 12)
+            .text('COVID-19 Pandemic')
+            .attr('opacity', 0)
           const $dotsGroup = $svg
             .append('g')
             .attr('id', 'plot1Dots')
@@ -302,7 +310,7 @@
               // console.log(bbox);
               tooltip.select('rect').attr('width', bbox.width + 10)
                 .attr('height', bbox.height + 5)
-              if(xScale(d[1]) + bbox.width + 10 > svgDim.w) {
+              if (xScale(d[1]) + bbox.width + 10 > svgDim.w) {
                 tooltip.attr('transform', (d) => 'translate(' + (xScale(
                   d[1]
                 ) - bbox.width - 16) + ', ' + (yScale(
@@ -331,10 +339,10 @@
         d3.selectAll('.plot1TooltipContainer')
           .each(function(d) {
             const bbox = d3.select(this).attr('display', 'block').node().getBBox(),
-            tooltip = d3.select(this);
+              tooltip = d3.select(this);
             d3.select(this).attr('display', 'none');
             // console.log(bbox);
-            if(xScale(d[1]) + bbox.width + 10 > svgDim.w) {
+            if (xScale(d[1]) + bbox.width + 10 > svgDim.w) {
               tooltip.attr('transform', (d) => 'translate(' + (xScale(
                 d[1]
               ) - bbox.width - 16) + ', ' + (yScale(
@@ -348,7 +356,7 @@
               ) + 6) + ')')
             }
             d3.select(this).select('.plot1tooltip-secondary')
-            .text((d) => d[2][weekNumber][0]);
+              .text((d) => d[2][weekNumber][0]);
           });
 
 
@@ -395,6 +403,10 @@
           .transition('spectreAnimate')
           .duration(200)
           .attr('opacity', isAfterCovid ? 0.25 : 0);
+        $svg.select('#plot1CovidLabel')
+          .transition('spectreAnimate')
+          .duration(200)
+          .attr('opacity', isAfterCovid ? 1 : 0);
         const currentWeek = dataByWeek[0][2][weekNumber][1];
         $svg.select('#weekOfText')
           .text('week of ' + [currentWeek[0].row_date, currentWeek.slice(-1)[0].row_date].map((d) => d.toISOString().split("T")[0]).join(' to '))
