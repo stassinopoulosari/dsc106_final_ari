@@ -1,0 +1,78 @@
+.color-mcdonalds {
+  fill: #ba0900;
+}
+.color-wendys {
+  fill: #acad7b;
+}
+.color-burgerking {
+  fill: #000e8a;
+}
+.container{
+  margin: auto;
+  text-align: center;
+  /* padding:2em; */
+}
+#plot1Controls {
+  display:flex;
+  flex:1;
+}
+#plot1Controls button {
+  display:block;
+  flex:1;
+}
+#plot1Controls input {
+  flex: 3;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+#plot1SVG, #plot2SVG, #plot3SVG {
+  width:100%;
+  height:auto;
+}
+svg text {
+  font-family: sans-serif;
+}
+
+button {
+  font-size: 1.25em;
+  background-color: #FFFFFF;
+  border: 1px solid grey;
+  cursor:pointer;
+}
+button:disabled {
+  cursor:not-allowed;
+}
+.covidSpectre {
+  fill: #BBB;
+}
+.covidLabel {
+  pointer-events: none;
+}
+
+@media only screen and (min-width:1200px) {
+  #trifecta {
+    display:flex;
+  }
+
+  #trifectaLeft, #trifectaRight {
+    padding:0;
+    margin:0;
+    flex:1;
+  }
+
+  #trifectaLeft {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .grow {
+    flex:1;
+    display:flex;
+    align-items:center;
+  }
+}
+
+h2 {
+  margin-top: 2em;
+  text-align: center;
+}
