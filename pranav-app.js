@@ -1,6 +1,6 @@
 (() => {
   function charts() {
-    boxPlotDataFilter();
+    // boxPlotDataFilter();
     bubbleMapFilter();
   }
 

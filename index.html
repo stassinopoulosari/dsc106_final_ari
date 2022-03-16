@@ -7,14 +7,16 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <script src="./d3.js"></script>
   <script src="https://d3js.org/topojson.v2.min.js"></script>
-  <link href="ari-style.css" rel="stylesheet" />
+  <link href="style.css" rel="stylesheet" />
   <title>DSC 106 Final Project: Group 35</title>
 </head>
 
 <body>
   <h1>DSC106 Final Project: Group 35</h1>
+  <i class="subheader">Brad Powell, Ari Stassinopoulos, Pranav Thaenraj</i>
   <h2>Introduction</h2>
   <p>For our final project, we elected to analyze traffic data for fast food restaurants in San Diego County with the goal of seeing the effect of the COVID-19 pandemic on traffic data. We chose to limit the restaurants analyzed to McDonald&apos;s, Wendy&apos;s, and Burger King restaurants. For the time period, we used the time between October of 2019 and October of 2020.</p>
+  <p></p>
   <h2>Plots 1-3: Explore weekly trends with restaurant visits in San Diego County</h2>
   <div id="trifecta">
     <div id="trifectaLeft" class="container">
@@ -104,7 +106,7 @@
       <svg id="plot5SVG"></svg>
     </div>
   </div>
-  <p>For plot 5, we chose to use a box plot to show how traffic changed for each brand of restaurants. The marks are areas and lines, and the channels are length and position. The length of the rectangle for each column represents the interquartile range where half of the restaurants fall and the position of the line in the middle of the rectangle shows where the median restaurant is. Additionally, the position of the whiskers shows where the quartile plus or minus 1.5 * IQR numbers fall</p>
+  <p>For plot 5, we chose to use a box plot to show how traffic changed for each brand of restaurants. The marks are areas and lines, and the channels are length and position. The area marks are the rectangles for each column and an area that represents the COVID-19 pandemic. The length of the rectangle for each column represents the interquartile range where half of the restaurants fall and the position of the line in the middle of the rectangle shows where the median restaurant is. Additionally, the position of the whiskers shows where the quartile plus or minus 1.5 * IQR numbers fall.</p>
   <p>For colors, we chose red, tan, and blue to match the colors from plots 1-3. This plot is interactive, and you can use the radio buttons provided above it to switch between brands.</p>
       <!-- <br> -->
       <!-- <div class="row">
