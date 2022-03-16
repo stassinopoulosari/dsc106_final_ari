@@ -12,6 +12,9 @@
 </head>
 
 <body>
+  <h1>DSC106 Final Project: Group 35</h1>
+  <h2>Introduction</h2>
+  <p>For our final project, we elected to analyze traffic data for fast food restaurants in San Diego County with the goal of seeing the effect of the COVID-19 pandemic on traffic data. We chose to limit the restaurants analyzed to McDonald&apos;s, Wendy&apos;s, and Burger King restaurants. For the time period, we used the time between October of 2019 and October of 2020.</p>
   <h2>Plots 1-3: Explore weekly trends with restaurant visits in San Diego County</h2>
   <div id="trifecta">
     <div id="trifectaLeft" class="container">
@@ -62,30 +65,49 @@
     pandemic. The second is the COVID cumulative average, which shows the cumulative average between the beginning of COVID and the current week.
   </p>
   <p>The visualisation showed no relationship between the distance from downtown San Diego and the visit numbers, but playing through the visualisation, you can see that there was a precipitous drop
-  in visits during the first days of the COVID-19 pandemic followed by a slow recovery.</p>
+    in visits during the first days of the COVID-19 pandemic followed by a slow recovery.</p>
   <p>The purpose of the second plot is to show the weekly trend in average total daily visits every week for every restaurant in the dataset. It is a line plot showing the trend between the weeks before
-  and after March 15, 2020 and the total daily visits. Hovering over any week will show a tooltip with the week dates and the number of average total daily visits for that week.</p>
-  <p>The purpose of the third plot is to show the weekly trend in average total visits, split by restaurant. It is a stacked bar chart showing the week on the X axis and a stack of McDonald&apos;s, Wendy&apos;s, and Burger King restaurants on the Y axis. Like with plot 2, hovering over a week will show a
-  tooltip for that week with the numbers for each restaurant and the week dates.</p>
+    and after March 15, 2020 and the total daily visits. Hovering over any week will show a tooltip with the week dates and the number of average total daily visits for that week.</p>
+  <p>The purpose of the third plot is to show the weekly trend in average total visits, split by restaurant. It is a stacked bar chart showing the week on the X axis and a stack of McDonald&apos;s, Wendy&apos;s, and Burger King restaurants on the Y
+    axis. Like with plot 2, hovering over a week will show a
+    tooltip for that week with the numbers for each restaurant and the week dates.</p>
   <p>Plots 2 and 3 are linked to one another by the tooltips. Hovering over any week in one graph will show the corresponding tooltip in the other graph. Additionally, they are linked to plot 1.
-  When playing through plot 1, a &quot;progress line&quot; shows in plots 2 and 3 of the week shown in plot 1. You can also click on any week in either plots 2 or 3 to jog plot 1 to the corresponding week.</p>
+    When playing through plot 1, a &quot;progress line&quot; shows in plots 2 and 3 of the week shown in plot 1. You can also click on any week in either plots 2 or 3 to jog plot 1 to the corresponding week.</p>
   <p>Plots 1 and 3 have a matching color scheme to show different restaurant brands. We chose red to represent McDonald&apos;s because it is the most recognizable color of the three and the McDonald&apos;s restaurants are both
-  the most prevalent and the most successful (see plot 6). Wendy&apos;s and Burger King get tan and blue colors, respectively, because we felt those were the colors that best represented their general vibe.</p>
+    the most prevalent and the most successful (see plot 6). Wendy&apos;s and Burger King get tan and blue colors, respectively, because we felt those were the colors that best represented their general vibe.</p>
   <p>For plots 1 and 2, we used points and lines as marks. For plot 3, as a stacked bar chart, we used areas as marks. Plots 2 and 3 also used areas for containment, to show which points were within the COVID-19 pandemic period.</p>
-  <p>As for channels, plot 1 used position and color hue as channels to show the relative location and visit number of restaurants, and the brand each restaurant represented. Plot 2 used position as a channel and area, with the dots within the COVID-19 period being slightly larger.</p>
+  <p>As for channels, plot 1 used position and color hue as channels to show the relative location and visit number of restaurants, and the brand each restaurant represented. Plot 2 used position as a channel and area, with the dots within the
+    COVID-19 period being slightly larger.</p>
   <p>Plot 3 used color hues showing the different restaurant brands and length as channels.</p>
   <div id="plot4Container" class="container">
     <h2>Plot 4: How did the total fast food traffic change per city during the course of the early COVID-19 pandemic?</h2>
     <div id="plot_4" class="center_plot">
     </div>
   </div>
-<p>For plot 4, we wanted to see exactly how the change in fast food traffic broke down by city. We chose a heatmap with the X axis being the month and the Y axis being the city in question. Initially, we plotted the total traffic on the heatmap but ran into the problem that San Diego had so many more
-fast food visits than any other area that the scale was not useful for comparing different areas. As such, we decided to switch to a percent change model to show the month-by-month change in fast food traffic.</p>
-<p>For marks, we used areas. For channels, we used color. This graph is interactive, as you can hover over any square to see the percent change in visits from the previous month for that city.</p>
-<p>We picked the colors red and green as standard ways to show decrease and increase, and white as a standard &quot;zero color&quot;.</p>
+  <p>For plot 4, we wanted to see exactly how the change in fast food traffic broke down by city. We chose a heatmap with the X axis being the month and the Y axis being the city in question. Initially, we plotted the total traffic on the heatmap but
+    ran into the problem that San Diego had so many more
+    fast food visits than any other area that the scale was not useful for comparing different areas. As such, we decided to switch to a percent change model to show the month-by-month change in fast food traffic.</p>
+  <p>For marks, we used areas. For channels, we used color. This graph is interactive, as you can hover over any square to see the percent change in visits from the previous month for that city.</p>
+  <p>We picked the colors red and green as standard ways to show decrease and increase, and white as a standard &quot;zero color&quot;.</p>
   <div id="plot5Container" class="container">
-    <br>
+    <h2>Plot 5: How did traffic change every month for each fast food brand?</h2>
     <div class="row">
+      <div id="plot5-radio" class="center_plot">
+        <input type="radio" id="McDonald-5" name="year" value="McDonald's" checked="checked">
+        <label for="McDonald-5">McDonald&apos;s</label>
+        <input type="radio" id="Wendy-5" name="year" value="Wendy's">
+        <label for="Wendy-5">Wendy&apos;s</label>
+        <input type="radio" id="BurgerKing-5" name="year" value="Burger King">
+        <label for="BurgerKing-5">Burger King</label>
+        <br>
+      </div>
+      <svg id="plot5SVG"></svg>
+    </div>
+  </div>
+  <p>For plot 5, we chose to use a box plot to show how traffic changed for each brand of restaurants. The marks are areas and lines, and the channels are length and position. The length of the rectangle for each column represents the interquartile range where half of the restaurants fall and the position of the line in the middle of the rectangle shows where the median restaurant is. Additionally, the position of the whiskers shows where the quartile plus or minus 1.5 * IQR numbers fall</p>
+  <p>For colors, we chose red, tan, and blue to match the colors from plots 1-3. This plot is interactive, and you can use the radio buttons provided above it to switch between brands.</p>
+      <!-- <br> -->
+      <!-- <div class="row">
       <h2>Plot 5: How did the average traffic change every month for each fast food brand?</h2>
       <div class="row">
         <div id="radio" class="center_plot">
@@ -99,29 +121,34 @@ fast food visits than any other area that the scale was not useful for comparing
         </div>
       </div>
       <div id="boxplot"></div>
+    </div> -->
+      <!-- <br> -->
     </div>
-    <br>
-  </div>
-  <div id="plot6Container" class="container">
+    <div id="plot6Container" class="container">
 
-    <br>
-    <div class="row">
-      <h2>Plot 6: Where are the fast food restaurants in San Diego?</h2>
+      <br>
       <div class="row">
-        <div id="map_sandiego" class="center_plot">
-          <input type="radio" id="McDonald_sandiego" name="mcd" value="McDonald's" checked="checked">
-          <label for="McDonald_sandiego">McDonald's</label>
-          <input type="radio" id="Wendy_sandiego" name="mcd" value="Wendy's">
-          <label for="Wendy_sandiego">Wendy's</label>
-          <input type="radio" id="BurgerKing_sandiego" name="mcd" value="Burger King">
-          <label for="BurgerKing_sandiego">Burger King</label>
-          <br>
+        <h2>Plot 6: Where are the fast food restaurants in San Diego?</h2>
+        <div class="row">
+          <div id="map_sandiego" class="center_plot">
+            <input type="radio" id="McDonald_sandiego" name="mcd" value="McDonald's" checked="checked">
+            <label for="McDonald_sandiego">McDonald's</label>
+            <input type="radio" id="Wendy_sandiego" name="mcd" value="Wendy's">
+            <label for="Wendy_sandiego">Wendy's</label>
+            <input type="radio" id="BurgerKing_sandiego" name="mcd" value="Burger King">
+            <label for="BurgerKing_sandiego">Burger King</label>
+            <br>
+          </div>
         </div>
+        <div id="map"></div>
       </div>
-      <div id="map"></div>
+      <br>
     </div>
-    <br>
-  </div>
+    <p>This graph is a geoplot showing the locations and visits of different fast food locations in the city of San Diego.</p>
+    <p>For marks, we used an area to show the city borders and points to show the fast food locations. For channels, we used area to show the relative sales and opacity to show whether a specific store is being hovered and therefore shown in the
+      tooltip or not.</p>
+    <p>We also used color to show the brand of different locations. For the color choise, we duplicated that of plots 1-3 (see above).</p>
+    <p>This plot is interactive. You can use the radio buttons to plot stores from a different restaurant.</p>
 </body>
 <script src="ari-preprocessing.js"></script>
 <script>
@@ -133,6 +160,7 @@ fast food visits than any other area that the scale was not useful for comparing
 <script src="ari-plot2.js"></script>
 <script src="ari-plot3.js"></script>
 <script src="brad-app.js"></script>
+<script src="ari-plot5.js"></script>
 <script src="pranav-app.js"></script>
 
 </html>

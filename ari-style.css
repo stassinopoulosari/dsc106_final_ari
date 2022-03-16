@@ -25,7 +25,7 @@
   margin-left: 0.5em;
   margin-right: 0.5em;
 }
-#plot1SVG, #plot2SVG, #plot3SVG, #plot_4 svg {
+#plot1SVG, #plot2SVG, #plot3SVG, #plot_4 svg, #plot5SVG {
   width:100%;
   height:auto;
 }
