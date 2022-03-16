@@ -8,7 +8,7 @@
   <script src="./d3.js"></script>
   <script src="https://d3js.org/topojson.v2.min.js"></script>
   <link href="ari-style.css" rel="stylesheet" />
-  <title>Final Project DV: Ari</title>
+  <title>DSC 106 Final Project: Group 35</title>
 </head>
 
 <body>
@@ -17,11 +17,19 @@
     <div id="trifectaLeft" class="container">
       <div class="grow">
         <div id="plot1Controls">
-          <button type="button" disabled class="plot1Reset"><nobr>|&lt;&lt;</nobr></button>
-          <button type="button" disabled id="plot1Back"><nobr>|&lt;</nobr></button>
+          <button type="button" disabled class="plot1Reset">
+            <nobr>|&lt;&lt;</nobr>
+          </button>
+          <button type="button" disabled id="plot1Back">
+            <nobr>|&lt;</nobr>
+          </button>
           <button type="button" id="plot1PlayPause">Play</button>
-          <button type="button" id="plot1Fwd"><nobr>&gt;|</nobr></button>
-          <button type="button" id="plot1End"><nobr>&gt&gt;|</nobr></button>
+          <button type="button" id="plot1Fwd">
+            <nobr>&gt;|</nobr>
+          </button>
+          <button type="button" id="plot1End">
+            <nobr>&gt&gt;|</nobr>
+          </button>
           <input type="range" min="0" max="56" value="0" id="plot1WeekRange" list="covidWeek">
           <button type="button" disabled class="plot1Reset">Reset</button>
         </div>
@@ -42,22 +50,55 @@
       </div>
     </div>
   </div>
+  <h3>Explanation:</h3>
+  <p>
+    The purpose of the first three plots were to explore trends week-over week. Plot 1 is a scatterplot that shows the relationship between the distance from downtown San Diego to different
+    fast food restaurants and their total weekly visits. It is interactive in that it allows you to change the weekly visualisation or play it back like a video. Hovering over any restaurant will show you a tooltip
+    with the name of the restaurant, its street address, and its weekly numbers for the shown week.
+  </p>
+  <p>
+    The graph also includes some cumulative average lines. The first line is the total cumulative average, which always shows. If you move the slider past the beginning of the COVID-19
+    pandemic in the united states, you can see two more lines. The first is the pre-COVID cumulative average, which is the total cumulative average frozen at the week before the COVID-19
+    pandemic. The second is the COVID cumulative average, which shows the cumulative average between the beginning of COVID and the current week.
+  </p>
+  <p>The visualisation showed no relationship between the distance from downtown San Diego and the visit numbers, but playing through the visualisation, you can see that there was a precipitous drop
+  in visits during the first days of the COVID-19 pandemic followed by a slow recovery.</p>
+  <p>The purpose of the second plot is to show the weekly trend in average total daily visits every week for every restaurant in the dataset. It is a line plot showing the trend between the weeks before
+  and after March 15, 2020 and the total daily visits. Hovering over any week will show a tooltip with the week dates and the number of average total daily visits for that week.</p>
+  <p>The purpose of the third plot is to show the weekly trend in average total visits, split by restaurant. It is a stacked bar chart showing the week on the X axis and a stack of McDonald&apos;s, Wendy&apos;s, and Burger King restaurants on the Y axis. Like with plot 2, hovering over a week will show a
+  tooltip for that week with the numbers for each restaurant and the week dates.</p>
+  <p>Plots 2 and 3 are linked to one another by the tooltips. Hovering over any week in one graph will show the corresponding tooltip in the other graph. Additionally, they are linked to plot 1.
+  When playing through plot 1, a &quot;progress line&quot; shows in plots 2 and 3 of the week shown in plot 1. You can also click on any week in either plots 2 or 3 to jog plot 1 to the corresponding week.</p>
+  <p>Plots 1 and 3 have a matching color scheme to show different restaurant brands. We chose red to represent McDonald&apos;s because it is the most recognizable color of the three and the McDonald&apos;s restaurants are both
+  the most prevalent and the most successful (see plot 6). Wendy&apos;s and Burger King get tan and blue colors, respectively, because we felt those were the colors that best represented their general vibe.</p>
+  <p>For plots 1 and 2, we used points and lines as marks. For plot 3, as a stacked bar chart, we used areas as marks. Plots 2 and 3 also used areas for containment, to show which points were within the COVID-19 pandemic period.</p>
+  <p>As for channels, plot 1 used position and color hue as channels to show the relative location and visit number of restaurants, and the brand each restaurant represented. Plot 2 used position as a channel and area, with the dots within the COVID-19 period being slightly larger.</p>
+  <p>Plot 3 used color hues showing the different restaurant brands and length as channels.</p>
+  <div id="plot4Container" class="container">
+    <h2>Plot 4: How did the total fast food traffic change per city during the course of the early COVID-19 pandemic?</h2>
+    <div id="plot_4" class="center_plot">
+    </div>
+  </div>
+<p>For plot 4, we wanted to see exactly how the change in fast food traffic broke down by city. We chose a heatmap with the X axis being the month and the Y axis being the city in question. Initially, we plotted the total traffic on the heatmap but ran into the problem that San Diego had so many more
+fast food visits than any other area that the scale was not useful for comparing different areas. As such, we decided to switch to a percent change model to show the month-by-month change in fast food traffic.</p>
+<p>For marks, we used areas. For channels, we used color. This graph is interactive, as you can hover over any square to see the percent change in visits from the previous month for that city.</p>
+<p>We picked the colors red and green as standard ways to show decrease and increase, and white as a standard &quot;zero color&quot;.</p>
   <div id="plot5Container" class="container">
     <br>
     <div class="row">
-      <h1>Plot 5: How did the average traffic change every month for each fast food brand?</h5>
-        <div class="row">
-          <div id="radio" class="center_plot">
-            <input type="radio" id="McDonald" name="year" value="McDonald's" checked="checked">
-            <label for="McDonald">McDonald's</label>
-            <input type="radio" id="Wendy" name="year" value="Wendy's">
-            <label for="Wendy">Wendy's</label>
-            <input type="radio" id="BurgerKing" name="year" value="Burger King">
-            <label for="BurgerKing">Burger King</label>
-            <br>
-          </div>
+      <h2>Plot 5: How did the average traffic change every month for each fast food brand?</h2>
+      <div class="row">
+        <div id="radio" class="center_plot">
+          <input type="radio" id="McDonald" name="year" value="McDonald's" checked="checked">
+          <label for="McDonald">McDonald's</label>
+          <input type="radio" id="Wendy" name="year" value="Wendy's">
+          <label for="Wendy">Wendy's</label>
+          <input type="radio" id="BurgerKing" name="year" value="Burger King">
+          <label for="BurgerKing">Burger King</label>
+          <br>
         </div>
-        <div id="boxplot"></div>
+      </div>
+      <div id="boxplot"></div>
     </div>
     <br>
   </div>
@@ -65,7 +106,7 @@
 
     <br>
     <div class="row">
-      <h1>Plot 6: Where are the fast food restaurants in San Diego?</h1>
+      <h2>Plot 6: Where are the fast food restaurants in San Diego?</h2>
       <div class="row">
         <div id="map_sandiego" class="center_plot">
           <input type="radio" id="McDonald_sandiego" name="mcd" value="McDonald's" checked="checked">
@@ -91,6 +132,7 @@
 <script src="ari-plot1.js"></script>
 <script src="ari-plot2.js"></script>
 <script src="ari-plot3.js"></script>
+<script src="brad-app.js"></script>
 <script src="pranav-app.js"></script>
 
 </html>

@@ -25,9 +25,19 @@
   margin-left: 0.5em;
   margin-right: 0.5em;
 }
-#plot1SVG, #plot2SVG, #plot3SVG {
+#plot1SVG, #plot2SVG, #plot3SVG, #plot_4 svg {
   width:100%;
   height:auto;
+}
+#plot_4 {
+  padding: 5%;
+}
+p, h3 {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+p {
+  text-indent: 2em;
 }
 svg text {
   font-family: sans-serif;
