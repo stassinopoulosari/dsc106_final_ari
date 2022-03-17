@@ -195,7 +195,7 @@
       const monthGroups = $svg.selectAll('.plot5month').data(restaurantData);
       monthGroups.each(function(d, i) {
         const monthGroup = d3.select(this);
-        console.log(monthGroup.node())
+        //console.log(monthGroup.node())
         monthGroup.select('.iqrRect')
           .transition()
           .duration(200)
@@ -204,7 +204,7 @@
           .attr('y', yScale(d[1].q3))
           .attr('height', yScale(d[1].q1) - yScale(d[1].q3))
           .attr('class', 'iqrRect color-' + restaurant.replace(' ', '').replace("'", '').toLowerCase())
-        console.log(monthGroup.select('.iqrRect').attr('y'))
+        //console.log(monthGroup.select('.iqrRect').attr('y'))
 
         monthGroup.select('.medianLine')
           .transition()

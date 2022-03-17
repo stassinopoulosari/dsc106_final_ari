@@ -70,8 +70,8 @@
         }
         ordered_month_city_counts.push(dict)
       }
-      console.log(filtered)
-      console.log(ordered_month_city_counts)
+      //console.log(filtered)
+      //console.log(ordered_month_city_counts)
 
 
       var margin = {
@@ -254,6 +254,6 @@
 
     })
   };
-  var filePath = "./data/Cleaned.csv";
+  var filePath = "Cleaned.csv";
   plot4(filePath);
 })();

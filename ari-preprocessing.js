@@ -8,7 +8,7 @@
       if (cachedData) {
         return accept(preprocessor(cachedData));
       }
-      const filePath = "data/Cleaned.csv"
+      const filePath = "Cleaned.csv"
       d3.csv(filePath).then((data) => {
         cachedData = data;
         return accept(preprocessor(data));

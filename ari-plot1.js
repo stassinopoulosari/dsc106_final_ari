@@ -68,7 +68,7 @@
           maxWeeklyVisits
         ];
       });
-    console.log(dataByWeek);
+    // console.log(dataByWeek);
     const weeklyAverage = (weekNumber) => {
         return d3.mean(dataByWeek.map((loc) => loc[2][weekNumber][0]))
       },
