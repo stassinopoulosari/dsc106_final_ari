@@ -15,8 +15,8 @@
   <h1>DSC106 Final Project: Group 35 (Part A)</h1>
   <i class="subheader">Brad Powell, Ari Stassinopoulos, Pranav Thaenraj</i>
   <h2>Introduction</h2>
-  <p>For our final project, we elected to analyze traffic data for fast food restaurants in San Diego County with the goal of seeing the effect of the COVID-19 pandemic on traffic data. We chose to limit the restaurants analyzed to McDonald&apos;s, Wendy&apos;s, and Burger King restaurants. For the time period, we used the time between October of 2019 and October of 2020.</p>
-  <p></p>
+  <p>For our final project, we elected to analyze traffic data for fast food restaurants in San Diego County with the goal of seeing the effect of the COVID-19 pandemic on traffic data. We chose to limit the restaurants analyzed to McDonald&apos;s,
+    Wendy&apos;s, and Burger King restaurants. For the time period, we used the time between October of 2019 and October of 2020.</p>
   <h2>Plots 1-3: Explore weekly trends with restaurant visits in San Diego County</h2>
   <div id="trifecta">
     <div id="trifectaLeft" class="container">
@@ -37,6 +37,9 @@
           </button>
           <input type="range" min="0" max="56" value="0" id="plot1WeekRange" list="covidWeek">
           <button type="button" disabled class="plot1Reset">Reset</button>
+          <datalist id="covidWeek">
+            <option value="24"></option>
+          </datalist>
         </div>
       </div>
       <svg id="plot1SVG"></svg>
@@ -44,13 +47,9 @@
     </div>
     <div id="trifectaRight">
       <div id="plot2Container" class="container">
-        <!-- <h1>How did the average total daily traffic change every week? (Line plot)</h1> -->
-        <br>
         <svg id="plot2SVG"></svg>
       </div>
       <div id="plot3Container" class="container">
-        <!-- <h1>Plot 3: How did the average daily traffic each week for each brand change during the course of the early COVID-19 pandemic (Stacked bar chart)?</h1> -->
-        <br>
         <svg id="plot3SVG"></svg>
       </div>
     </div>
@@ -101,68 +100,42 @@
         <label for="Wendy-5">Wendy&apos;s</label>
         <input type="radio" id="BurgerKing-5" name="year" value="Burger King">
         <label for="BurgerKing-5">Burger King</label>
-        <br>
       </div>
       <svg id="plot5SVG"></svg>
     </div>
   </div>
-  <p>For plot 5, we chose to use a box plot to show how traffic changed for each brand of restaurants. The marks are areas and lines, and the channels are length and position. The area marks are the rectangles for each column and an area that represents the COVID-19 pandemic. The length of the rectangle for each column represents the interquartile range where half of the restaurants fall and the position of the line in the middle of the rectangle shows where the median restaurant is. Additionally, the position of the whiskers shows where the quartile plus or minus 1.5 * IQR numbers fall.</p>
+  <p>For plot 5, we chose to use a box plot to show how traffic changed for each brand of restaurants. The marks are areas and lines, and the channels are length and position. The area marks are the rectangles for each column and an area that
+    represents the COVID-19 pandemic. The length of the rectangle for each column represents the interquartile range where half of the restaurants fall and the position of the line in the middle of the rectangle shows where the median restaurant is.
+    Additionally, the position of the whiskers shows where the quartile plus or minus 1.5 * IQR numbers fall.</p>
   <p>For colors, we chose red, tan, and blue to match the colors from plots 1-3. This plot is interactive, and you can use the radio buttons provided above it to switch between brands.</p>
-      <!-- <br> -->
-      <!-- <div class="row">
-      <h2>Plot 5: How did the average traffic change every month for each fast food brand?</h2>
-      <div class="row">
-        <div id="radio" class="center_plot">
-          <input type="radio" id="McDonald" name="year" value="McDonald's" checked="checked">
-          <label for="McDonald">McDonald's</label>
-          <input type="radio" id="Wendy" name="year" value="Wendy's">
-          <label for="Wendy">Wendy's</label>
-          <input type="radio" id="BurgerKing" name="year" value="Burger King">
-          <label for="BurgerKing">Burger King</label>
-          <br>
-        </div>
-      </div>
-      <div id="boxplot"></div>
-    </div> -->
-      <!-- <br> -->
-    </div>
-    <div id="plot6Container" class="container">
+  <div id="plot6Container" class="container">
 
-      <br>
+    <div class="row">
+      <h2>Plot 6: Where are the fast food restaurants in San Diego?</h2>
       <div class="row">
-        <h2>Plot 6: Where are the fast food restaurants in San Diego?</h2>
-        <div class="row">
-          <div id="map_sandiego" class="center_plot">
-            <input type="radio" id="McDonald_sandiego" name="mcd" value="McDonald's" checked="checked">
-            <label for="McDonald_sandiego">McDonald's</label>
-            <input type="radio" id="Wendy_sandiego" name="mcd" value="Wendy's">
-            <label for="Wendy_sandiego">Wendy's</label>
-            <input type="radio" id="BurgerKing_sandiego" name="mcd" value="Burger King">
-            <label for="BurgerKing_sandiego">Burger King</label>
-            <br>
-          </div>
+        <div id="map_sandiego" class="center_plot">
+          <input type="radio" id="McDonald_sandiego" name="mcd" value="McDonald's" checked="checked">
+          <label for="McDonald_sandiego">McDonald's</label>
+          <input type="radio" id="Wendy_sandiego" name="mcd" value="Wendy's">
+          <label for="Wendy_sandiego">Wendy's</label>
+          <input type="radio" id="BurgerKing_sandiego" name="mcd" value="Burger King">
+          <label for="BurgerKing_sandiego">Burger King</label>
         </div>
-        <div id="map"></div>
       </div>
-      <br>
+      <div id="map"></div>
     </div>
-    <p>This graph is a geoplot showing the locations and visits of different fast food locations in the city of San Diego.</p>
-    <p>For marks, we used an area to show the city borders and points to show the fast food locations. For channels, we used area to show the relative sales and opacity to show whether a specific store is being hovered and therefore shown in the
-      tooltip or not.</p>
-    <p>We also used color to show the brand of different locations. For the color choise, we duplicated that of plots 1-3 (see above).</p>
-    <p>This plot is interactive. You can use the radio buttons to plot stores from a different restaurant.</p>
+  </div>
+  <p>This graph is a geoplot showing the locations and visits of different fast food locations in the city of San Diego.</p>
+  <p>For marks, we used an area to show the city borders and points to show the fast food locations. For channels, we used area to show the relative sales and opacity to show whether a specific store is being hovered and therefore shown in the
+    tooltip or not.</p>
+  <p>We also used color to show the brand of different locations. For the color choise, we duplicated that of plots 1-3 (see above).</p>
+  <p>This plot is interactive. You can use the radio buttons to plot stores from a different restaurant.</p>
 </body>
-<script src="ari-preprocessing.js"></script>
 <script>
   window.updatePlot1 = () => {};
   window.updatePlot3 = () => {};
   window.updatePlot2 = () => {};
 </script>
-<script src="ari-plot1.js"></script>
-<script src="ari-plot2.js"></script>
-<script src="ari-plot3.js"></script>
-<script src="brad-app.js"></script>
-<script src="ari-plot5.js"></script>
-<script src="pranav-app.js"></script>
+<script src="app.js"></script>
 
 </html>
